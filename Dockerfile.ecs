@@ -9,7 +9,7 @@ FROM source as test
 COPY ./test ./test
 COPY ./tox.ini ./ ./requirements-dev.txt ./
 RUN pip3 install -r requirements-dev.txt
-CMD tox -e py38 && mypy pystandlogger/
+CMD tox -e py39 && mypy pystandlogger/
 
 FROM source as builder
 RUN pip3 install wheel
