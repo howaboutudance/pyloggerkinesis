@@ -12,7 +12,7 @@ RUN pip3 install -r requirements-dev.txt
 CMD tox -e py39 && mypy pystandlogger/
 
 FROM source as builder
-RUN pip3 install wheel
+RUN pip3 install --no-cache-dir wheel
 RUN python setup.py bdist_wheel
 
 FROM python:3.9 as interact
@@ -20,7 +20,7 @@ COPY --from=builder /app/dist ./app/dist
 WORKDIR app
 COPY ./requirements-interact.txt ./
 RUN pip3 install -r requirements-interact.txt && pip3 install dist/pystandlogger*
-CMD jupyter console
+CMD ipython
 
 FROM python:3.9-slim as app
 COPY --from=builder /app/dist ./app/dist

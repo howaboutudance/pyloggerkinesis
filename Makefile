@@ -1,6 +1,7 @@
 BUILD_TAG = hematite/pyecslogger
 INTERACT_TAG = ${BUILD_TAG}-interact
 TEST_TAG = ${BUILD_TAG}-test
+ECR_TAG = public.ecr.aws/g8z1b4q2/pystandlogger:latest
 DOCKER_BUILD=docker build ./ -f Dockerfile.ecs
 DOCKER_RUN=docker run
 VENV_VERSION_FOLDER := venv$(shell python3 --version | sed -ne 's/[^0-9]*\(\([0-9]\.\)\{0,2\}\).*/\1/p' | sed -e "s/\.//g")
@@ -15,6 +16,10 @@ init-env: FORCE
 
 build: FORCE
 	${DOCKER_BUILD} --no-cache=true --target=app -t ${BUILD_TAG}
+
+publish: build
+	docker tag ${BUILD_TAG} ${ECR_TAG} 
+	docker push ${ECR_TAG}
 
 run:
 	${DOCKER_RUN} ${BUILD_TAG}

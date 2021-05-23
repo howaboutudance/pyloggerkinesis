@@ -1,4 +1,4 @@
-import stand_dist
+from . import stand_dist
 import logging
 from pathlib import Path
 
