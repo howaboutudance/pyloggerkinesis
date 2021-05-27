@@ -17,6 +17,9 @@ init-env: FORCE
 build: FORCE
 	${DOCKER_BUILD} --no-cache=true --target=app -t ${BUILD_TAG}
 
+build-dev: FORCE
+	${DOCKER_BUILD} --target=app -t ${BUILD_TAG}
+
 publish: build
 	docker tag ${BUILD_TAG} ${ECR_TAG} 
 	docker push ${ECR_TAG}

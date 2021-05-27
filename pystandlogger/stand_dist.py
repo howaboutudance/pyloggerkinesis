@@ -2,13 +2,14 @@ from typing import Callable, MutableMapping, Text
 import numpy as np
 import logging
 from pathlib import Path
+import argparse
+from aws_logging_handlers.Kinesis import KinesisHandler
 
 stand_dist_logger = logging.getLogger("pystandlogger.stand_dist")
-stand_dist_logger.setLevel(logging.DEBUG)
+stand_dist_logger.setLevel(logging.INFO)
 
 value_logger = logging.getLogger("pystandlogger.stand_dist.values")
 value_logger.setLevel(logging.DEBUG)
-
 
 fh = logging.FileHandler(Path("./values.json", encoding="utf-8", mode="w"))
 fh.setFormatter(logging.Formatter("%(message)s"))
@@ -49,3 +50,6 @@ def summary(func: Callable[..., np.ndarray] = generate_standard, **kwargs) -> Mu
 
   stand_dist_logger.info({"event": "summary", **summary_dict})
   return summary_dict
+
+def setup_parser() -> argparse.ArgumentParser:
+  pass
